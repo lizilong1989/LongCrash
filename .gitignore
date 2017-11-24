@@ -16,6 +16,9 @@ DerivedData/
 *.perspectivev3
 !default.perspectivev3
 xcuserdata/
+.DS_Store
+LongCrashDemo/Pods
+LongCrashDemo/Podfile.lock
 
 ## Other
 *.moved-aside
