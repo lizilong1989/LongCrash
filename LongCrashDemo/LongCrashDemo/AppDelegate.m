@@ -8,8 +8,9 @@
 
 #import "AppDelegate.h"
 #import "NSObject+longSwizzling.h"
+#import "LongCrashManager.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () <LongCrashDelegate>
 
 @end
 
@@ -19,7 +20,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    [[LongCrashManager sharedInstancel] addDelegate:self delegateQueue:nil];
     [[NSString class] performSelector:@selector(icjiocdj:fkofkoefkoe:) withObject:@""];
+    [[NSString new] performSelector:@selector(icjiocdj:fkofkoefkoe:) withObject:@""];
     return YES;
 }
 
@@ -48,6 +51,13 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - LongCrashDelegate
+
+- (void)didCrashWithInfo:(NSString *)aInfo
+{
+    NSLog(@"%@",aInfo);
 }
 
 

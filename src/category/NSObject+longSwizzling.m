@@ -10,35 +10,8 @@
 
 #import <objc/runtime.h>
 
-@interface LongCrash : NSObject
-
-+ (instancetype)sharedInstancel;
-
-@end
-
-static LongCrash *instancel = nil;
-
-@implementation LongCrash
-
-+ (instancetype)sharedInstancel
-{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        instancel = [[LongCrash alloc] init];
-    });
-    return instancel;
-}
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
-}
-
-@end
+#import "LongCrashManager.h"
+#import "LongCrashManager+listener.h"
 
 @implementation NSObject (longSwizz)
 
@@ -64,10 +37,11 @@ void dynamicMethodIMP(id self, SEL _cmd) {
     
     NSMethodSignature *sig = [self swizz_instance_methodSignatureForSelector:aSelector];
     if (sig == nil) {
-        if (![[LongCrash sharedInstancel] respondsToSelector:aSelector]) {
-            class_addMethod([LongCrash class], aSelector, (IMP)dynamicMethodIMP, "v@:");
+        if (![[LongCrashManager sharedInstancel] respondsToSelector:aSelector]) {
+            class_addMethod([LongCrashManager class], aSelector, (IMP)dynamicMethodIMP, "v@:");
         }
-        sig = [[LongCrash sharedInstancel] methodSignatureForSelector:aSelector];
+        sig = [[LongCrashManager sharedInstancel] methodSignatureForSelector:aSelector];
+        [[LongCrashManager sharedInstancel] onCrashWithInfo:[NSString stringWithFormat:@"unrecognized-[class:%@]-[sel:%@]" ,[self class] ,NSStringFromSelector(aSelector)]];
     }
     return sig;
 }
@@ -75,8 +49,8 @@ void dynamicMethodIMP(id self, SEL _cmd) {
 - (void)swizz_instance_forwardInvocation:(NSInvocation *)aInvocation
 {
     id target = nil;
-    if ([[LongCrash sharedInstancel] methodSignatureForSelector:[aInvocation selector]] ) {
-        target = [LongCrash sharedInstancel];
+    if ([[LongCrashManager sharedInstancel] methodSignatureForSelector:[aInvocation selector]] ) {
+        target = [LongCrashManager sharedInstancel];
         [aInvocation invokeWithTarget:target];
     } else {
         [self swizz_instance_forwardInvocation:aInvocation];
@@ -87,10 +61,11 @@ void dynamicMethodIMP(id self, SEL _cmd) {
     
     NSMethodSignature *sig = [self swizz_class_methodSignatureForSelector:aSelector];
     if (sig == nil) {
-        if (![[LongCrash sharedInstancel] respondsToSelector:aSelector]) {
-            class_addMethod([LongCrash class], aSelector, (IMP)dynamicMethodIMP, "v@:");
+        if (![[LongCrashManager sharedInstancel] respondsToSelector:aSelector]) {
+            class_addMethod([LongCrashManager class], aSelector, (IMP)dynamicMethodIMP, "v@:");
         }
-        sig = [[LongCrash sharedInstancel] methodSignatureForSelector:aSelector];
+        sig = [[LongCrashManager sharedInstancel] methodSignatureForSelector:aSelector];
+        [[LongCrashManager sharedInstancel] onCrashWithInfo:[NSString stringWithFormat:@"unrecognized-[class:%@]-[sel:%@]" ,[self class] ,NSStringFromSelector(aSelector)]];
     }
     return sig;
 }
@@ -98,8 +73,8 @@ void dynamicMethodIMP(id self, SEL _cmd) {
 - (void)swizz_class_forwardInvocation:(NSInvocation *)aInvocation
 {
     id target = nil;
-    if ([[LongCrash sharedInstancel] methodSignatureForSelector:[aInvocation selector]] ) {
-        target = [LongCrash sharedInstancel];
+    if ([[LongCrashManager sharedInstancel] methodSignatureForSelector:[aInvocation selector]] ) {
+        target = [LongCrashManager sharedInstancel];
         [aInvocation invokeWithTarget:target];
     } else {
         [self swizz_class_forwardInvocation:aInvocation];
