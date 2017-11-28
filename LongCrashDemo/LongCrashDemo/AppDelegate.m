@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "NSObject+longSwizzling.h"
+
 #import "LongCrashManager.h"
 
 @interface AppDelegate () <LongCrashDelegate>
@@ -23,6 +23,15 @@
     [[LongCrashManager sharedInstancel] addDelegate:self delegateQueue:nil];
     [[NSString class] performSelector:@selector(icjiocdj:fkofkoefkoe:) withObject:@""];
     [[NSString new] performSelector:@selector(icjiocdj:fkofkoefkoe:) withObject:@""];
+    [[UIView new] performSelector:@selector(icjiocdj:fkofkoefkoe:) withObject:@"jioafjiosaf"];
+    [[UIView class] performSelector:@selector(icjiocdj:fkofkoefkoe:) withObject:[UIImage new]];
+    
+    NSArray *array = @[@"1",@"2"];
+    id value = [array objectAtIndex:2];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:@"123" forKey:value];
+    [dic setObject:value forKey:@"key"];
+    
     return YES;
 }
 

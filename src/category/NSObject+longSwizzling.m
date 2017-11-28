@@ -41,7 +41,7 @@ void dynamicMethodIMP(id self, SEL _cmd) {
             class_addMethod([LongCrashManager class], aSelector, (IMP)dynamicMethodIMP, "v@:");
         }
         sig = [[LongCrashManager sharedInstancel] methodSignatureForSelector:aSelector];
-        [[LongCrashManager sharedInstancel] onCrashWithInfo:[NSString stringWithFormat:@"unrecognized-[class:%@]-[sel:%@]" ,[self class] ,NSStringFromSelector(aSelector)]];
+        [[LongCrashManager sharedInstancel] onCrashWithInfo:[NSString stringWithFormat:@"LongCrash|[%@ %@]:unrecognized selector sent to class %p|instance" ,[self class] ,NSStringFromSelector(aSelector) ,self]];
     }
     return sig;
 }
@@ -65,7 +65,7 @@ void dynamicMethodIMP(id self, SEL _cmd) {
             class_addMethod([LongCrashManager class], aSelector, (IMP)dynamicMethodIMP, "v@:");
         }
         sig = [[LongCrashManager sharedInstancel] methodSignatureForSelector:aSelector];
-        [[LongCrashManager sharedInstancel] onCrashWithInfo:[NSString stringWithFormat:@"unrecognized-[class:%@]-[sel:%@]" ,[self class] ,NSStringFromSelector(aSelector)]];
+        [[LongCrashManager sharedInstancel] onCrashWithInfo:[NSString stringWithFormat:@"LongCrash|[%@ %@]:unrecognized selector sent to class %p|class" ,[self class] ,NSStringFromSelector(aSelector), self]];
     }
     return sig;
 }
