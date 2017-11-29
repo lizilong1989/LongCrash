@@ -15,7 +15,7 @@
 
 @implementation NSObject (longSwizz)
 
-+ (void)load
++ (void)long_crash
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{

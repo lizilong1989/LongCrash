@@ -9,6 +9,10 @@
 
 #import "LongMulticastDelegate.h"
 
+#import "NSArray+longSwizzling.h"
+#import "NSObject+longSwizzling.h"
+#import "NSDictionary+longSwizzling.h"
+
 static LongCrashManager *instancel = nil;
 
 @interface LongCrashManager ()
@@ -33,6 +37,9 @@ static LongCrashManager *instancel = nil;
     self = [super init];
     if (self) {
         _delegate = (LongMulticastDelegate<LongCrashDelegate> *)[[LongMulticastDelegate alloc] init];
+        [NSObject long_crash];
+        [NSArray long_crash];
+        [NSDictionary long_crash];
     }
     return self;
 }

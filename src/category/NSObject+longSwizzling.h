@@ -10,4 +10,6 @@
 
 @interface NSObject (longSwizzling)
 
++ (void)long_crash;
+
 @end

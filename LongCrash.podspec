@@ -8,7 +8,6 @@ Pod::Spec.new do |spec|
   spec.source       =  {:git => 'https://github.com/lizilong1989/LongCrash.git', :tag => spec.version.to_s }
   spec.platform     = :ios, '6.0'
   spec.requires_arc = true
-  spec.frameworks   = 'Security'
   spec.xcconfig     = {'OTHER_LDFLAGS' => '-ObjC'}
   spec.default_subspec = 'Core'
 

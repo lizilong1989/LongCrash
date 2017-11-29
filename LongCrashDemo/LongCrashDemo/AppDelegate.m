@@ -21,6 +21,7 @@
     // Override point for customization after application launch.
     
     [[LongCrashManager sharedInstancel] addDelegate:self delegateQueue:nil];
+    
     [[NSString class] performSelector:@selector(icjiocdj:fkofkoefkoe:) withObject:@""];
     [[NSString new] performSelector:@selector(icjiocdj:fkofkoefkoe:) withObject:@""];
     [[UIView new] performSelector:@selector(icjiocdj:fkofkoefkoe:) withObject:@"jioafjiosaf"];
@@ -28,7 +29,8 @@
     
     NSArray *array = @[@"1",@"2"];
     id value = [array objectAtIndex:2];
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"key2":@"123",value:@"456"}];
     [dic setObject:@"123" forKey:value];
     [dic setObject:value forKey:@"key"];
     
