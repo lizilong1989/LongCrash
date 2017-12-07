@@ -81,6 +81,7 @@ pod install
 ### v1.0.1
 * 回调信息增加调用栈信息(默认不打印，需要设置)，规范回调数据格式
 * 避免NSArray因initWithObjects:count:包含nil引起crash
+* 避免NSArray因addObject: or insertObject:atIndex:异常数据引起crash
 * 避免NSMutableDictionary因removeObjectForKey:设置nil引起crash
 
 ### v1.0.0

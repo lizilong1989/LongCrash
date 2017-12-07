@@ -21,6 +21,7 @@
         Class __NSArrayI = objc_getClass("__NSArrayI");
         Class __NSSingleObjectArrayI = objc_getClass("__NSSingleObjectArrayI");
         Class __NSArray0 = objc_getClass("__NSArray0");
+        Class __NSArrayM = objc_getClass("__NSArrayM");
         Class __NSPlaceholderArray = objc_getClass("__NSPlaceholderArray");
         
         method_exchangeImplementations(class_getInstanceMethod(__NSArrayI, @selector(objectAtIndex:)), class_getInstanceMethod([self class], @selector(swizz_instance_NSArrayI_objectAtIndex:)));
@@ -28,6 +29,12 @@
         method_exchangeImplementations(class_getInstanceMethod(__NSArray0, @selector(objectAtIndex:)), class_getInstanceMethod([self class], @selector(swizz_instance_NSArray0_objectAtIndex:)));
         
         method_exchangeImplementations(class_getInstanceMethod(__NSSingleObjectArrayI, @selector(objectAtIndex:)), class_getInstanceMethod([self class], @selector(swizz_instance_NSSingleObjectArrayI_objectAtIndex:)));
+        
+        method_exchangeImplementations(class_getInstanceMethod(__NSArrayM, @selector(objectAtIndex:)), class_getInstanceMethod([self class], @selector(swizz_instance_NSArrayM_objectAtIndex:)));
+        
+        method_exchangeImplementations(class_getInstanceMethod(__NSArrayM, @selector(addObject:)), class_getInstanceMethod([self class], @selector(swizz_instance_addObject:)));
+        
+        method_exchangeImplementations(class_getInstanceMethod(__NSArrayM, @selector(insertObject:atIndex:)), class_getInstanceMethod([self class], @selector(swizz_instance_insertObject:atIndex:)));
         
         method_exchangeImplementations(class_getInstanceMethod(__NSPlaceholderArray, @selector(initWithObjects:count:)), class_getInstanceMethod([self class], @selector(swizz_instance_initWithObjects:count:)));
     });
@@ -117,6 +124,63 @@
     }
     id ret = [self swizz_instance_NSSingleObjectArrayI_objectAtIndex:index];
     return ret;
+}
+
+- (id)swizz_instance_NSArrayM_objectAtIndex:(NSUInteger)index
+{
+    //避免数组越界造成crash
+    if (self.count <= index) {
+        NSInteger count = self.count != 0 ? self.count - 1 : 0;
+        [[LongCrashManager sharedInstancel] onCrashWithClassName:[NSString stringWithFormat:@"%@", [self class]]
+                                                    selectorName:@"objectAtIndex:"
+                                                   exceptionName:[NSString stringWithFormat:@"index %ld beyond bounds [0 .. %ld]" ,index ,count]
+                                                         address:[NSString stringWithFormat:@"%p", self]
+                                                      isInstance:YES
+                                                callStackSymbols:[NSString stringWithFormat:@"%@", [NSThread callStackSymbols]]];
+        
+        return nil;
+    }
+    id ret = [self swizz_instance_NSArrayM_objectAtIndex:index];
+    return ret;
+}
+
+#pragma mark - @selector(addObject:)
+
+- (void)swizz_instance_addObject:(id)anObject
+{
+    if (anObject != nil) {
+        [self swizz_instance_addObject:anObject];
+    } else {
+        [[LongCrashManager sharedInstancel] onCrashWithClassName:[NSString stringWithFormat:@"%@", [self class]]
+                                                    selectorName:@"addObject:"
+                                                   exceptionName:@"object cannot be nil"
+                                                         address:[NSString stringWithFormat:@"%p", self]
+                                                      isInstance:YES
+                                                callStackSymbols:[NSString stringWithFormat:@"%@", [NSThread callStackSymbols]]];
+    }
+}
+
+#pragma mark - @selector(insertObject:atIndex:)
+
+- (void)swizz_instance_insertObject:(id)anObject atIndex:(NSUInteger)index;
+{
+    if (anObject == nil) {
+        [[LongCrashManager sharedInstancel] onCrashWithClassName:[NSString stringWithFormat:@"%@", [self class]]
+                                                    selectorName:@"insertObject:atIndex:"
+                                                   exceptionName:@"object cannot be nil"
+                                                         address:[NSString stringWithFormat:@"%p", self]
+                                                      isInstance:YES
+                                                callStackSymbols:[NSString stringWithFormat:@"%@", [NSThread callStackSymbols]]];
+    } else if (index > self.count) {
+        [[LongCrashManager sharedInstancel] onCrashWithClassName:[NSString stringWithFormat:@"%@", [self class]]
+                                                    selectorName:@"insertObject:atIndex:"
+                                                   exceptionName:[NSString stringWithFormat:@"index 3 beyond bounds [0 .. %lu]", (unsigned long)self.count]
+                                                         address:[NSString stringWithFormat:@"%p", self]
+                                                      isInstance:YES
+                                                callStackSymbols:[NSString stringWithFormat:@"%@", [NSThread callStackSymbols]]];
+    } else {
+        [self swizz_instance_insertObject:anObject atIndex:index];
+    }
 }
 
 @end

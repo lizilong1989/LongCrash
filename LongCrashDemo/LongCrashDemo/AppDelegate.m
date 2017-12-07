@@ -20,23 +20,30 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    
+    //LongCrash 初始化
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970] * 1000;
     [[LongCrashManager sharedInstancel] addDelegate:self delegateQueue:nil];
     NSTimeInterval endTime = [[NSDate date] timeIntervalSince1970] * 1000;
     NSLog(@"%f",endTime - startTime);
     
+    //测试unrecognized
     [[NSString class] performSelector:@selector(icjiocdj:fkofkoefkoe:) withObject:@""];
     [[NSString new] performSelector:@selector(icjiocdj:fkofkoefkoe:) withObject:@""];
     [[NSString new] performSelector:@selector(lastObject)];
     
+    //测试数组
     id temp = nil;
-    NSArray *array = [NSArray arrayWithArray:@[@"1",@"2",temp]];
-    id value = [array objectAtIndex:2];
+    NSMutableArray *array = [NSMutableArray arrayWithArray:@[@"1",@"2"]];
+    id value = [array objectAtIndex:4];
+    [array insertObject:@"aaa" atIndex:3];
+    [array addObject:temp];
 
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"key2":@"123",@"123":@"456"}];
-    [dic setObject:@"123" forKey:value];
-    [dic setObject:value forKey:@"key"];
-    
+    //测试字典
+//    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"key2":@"123",@"123":@"456"}];
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:@"123" forKey:temp];
+    [dic setObject:temp forKey:@"key"];
     [dic removeObjectForKey:value];
     
     return YES;
