@@ -23,6 +23,11 @@
 @interface LongCrashManager : NSObject
 
 /*!
+ *  是否打印栈信息
+ */
+@property (nonatomic, assign) BOOL isPrintCallStack;
+
+/*!
  *  获取SDK实例
  */
 + (instancetype)sharedInstancel;

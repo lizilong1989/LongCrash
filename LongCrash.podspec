@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = 'LongCrash'
-  spec.version      = '1.0.0'
+  spec.version      = '1.0.1'
   spec.license       = { :type => 'Personal', :text => 'zilong.li' }
   spec.summary      = 'An Objective-C tool to avoid Crash'
   spec.homepage     = 'https://github.com/lizilong1989/LongCrash'

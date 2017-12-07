@@ -24,4 +24,21 @@
     }
 }
 
+- (void)onCrashWithClassName:(NSString*)aClassName
+                selectorName:(NSString*)aSelectorName
+               exceptionName:(NSString*)aExceptionName
+                     address:(NSString*)aAddress
+                  isInstance:(BOOL)aIsInstance
+            callStackSymbols:(NSString*)aCallStackSymbols
+{
+    Ivar ivar = class_getInstanceVariable([LongCrashManager class], "_delegate");
+    if (ivar) {
+        LongMulticastDelegate<LongCrashDelegate> *delegate = (LongMulticastDelegate<LongCrashDelegate> *)object_getIvar([LongCrashManager sharedInstancel], ivar);
+        NSString *aInfo = [NSString stringWithFormat:@"LongCrash|[%@ %@]|%@|%p|%@|%@" ,aClassName ,aSelectorName, aExceptionName ,aAddress ,aIsInstance?@"instance":@"class" ,self.isPrintCallStack?aCallStackSymbols:@""];
+        if (delegate) {
+            [delegate didCrashWithInfo:aInfo];
+        }
+    }
+}
+
 @end

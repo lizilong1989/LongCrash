@@ -37,6 +37,7 @@ static LongCrashManager *instancel = nil;
     self = [super init];
     if (self) {
         _delegate = (LongMulticastDelegate<LongCrashDelegate> *)[[LongMulticastDelegate alloc] init];
+        _isPrintCallStack = NO;
         [NSObject long_crash];
         [NSArray long_crash];
         [NSDictionary long_crash];

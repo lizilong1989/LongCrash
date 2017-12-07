@@ -20,19 +20,24 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970] * 1000;
     [[LongCrashManager sharedInstancel] addDelegate:self delegateQueue:nil];
+    NSTimeInterval endTime = [[NSDate date] timeIntervalSince1970] * 1000;
+    NSLog(@"%f",endTime - startTime);
     
     [[NSString class] performSelector:@selector(icjiocdj:fkofkoefkoe:) withObject:@""];
     [[NSString new] performSelector:@selector(icjiocdj:fkofkoefkoe:) withObject:@""];
-    [[UIView new] performSelector:@selector(icjiocdj:fkofkoefkoe:) withObject:@"jioafjiosaf"];
-    [[UIView class] performSelector:@selector(icjiocdj:fkofkoefkoe:) withObject:[UIImage new]];
+    [[NSString new] performSelector:@selector(lastObject)];
     
-    NSArray *array = @[@"1",@"2"];
+    id temp = nil;
+    NSArray *array = [NSArray arrayWithArray:@[@"1",@"2",temp]];
     id value = [array objectAtIndex:2];
-    
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"key2":@"123",value:@"456"}];
+
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"key2":@"123",@"123":@"456"}];
     [dic setObject:@"123" forKey:value];
     [dic setObject:value forKey:@"key"];
+    
+    [dic removeObjectForKey:value];
     
     return YES;
 }

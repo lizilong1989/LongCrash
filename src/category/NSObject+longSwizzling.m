@@ -33,6 +33,8 @@ void dynamicMethodIMP(id self, SEL _cmd) {
     //do nothing
 }
 
+#pragma mark - instance
+
 - (NSMethodSignature *)swizz_instance_methodSignatureForSelector:(SEL)aSelector {
     
     NSMethodSignature *sig = [self swizz_instance_methodSignatureForSelector:aSelector];
@@ -41,7 +43,12 @@ void dynamicMethodIMP(id self, SEL _cmd) {
             class_addMethod([LongCrashManager class], aSelector, (IMP)dynamicMethodIMP, "v@:");
         }
         sig = [[LongCrashManager sharedInstancel] methodSignatureForSelector:aSelector];
-        [[LongCrashManager sharedInstancel] onCrashWithInfo:[NSString stringWithFormat:@"LongCrash|[%@ %@]:unrecognized selector sent to class %p|instance" ,[self class] ,NSStringFromSelector(aSelector) ,self]];
+        [[LongCrashManager sharedInstancel] onCrashWithClassName:[NSString stringWithFormat:@"%@", [self class]]
+                                                    selectorName:NSStringFromSelector(aSelector)
+                                                   exceptionName:@"unrecognized selector sent to instance"
+                                                         address:[NSString stringWithFormat:@"%p", self]
+                                                      isInstance:YES
+                                                callStackSymbols:[NSString stringWithFormat:@"%@", [NSThread callStackSymbols]]];
     }
     return sig;
 }
@@ -57,6 +64,8 @@ void dynamicMethodIMP(id self, SEL _cmd) {
     }
 }
 
+#pragma mark - class
+
 - (NSMethodSignature *)swizz_class_methodSignatureForSelector:(SEL)aSelector {
     
     NSMethodSignature *sig = [self swizz_class_methodSignatureForSelector:aSelector];
@@ -65,7 +74,12 @@ void dynamicMethodIMP(id self, SEL _cmd) {
             class_addMethod([LongCrashManager class], aSelector, (IMP)dynamicMethodIMP, "v@:");
         }
         sig = [[LongCrashManager sharedInstancel] methodSignatureForSelector:aSelector];
-        [[LongCrashManager sharedInstancel] onCrashWithInfo:[NSString stringWithFormat:@"LongCrash|[%@ %@]:unrecognized selector sent to class %p|class" ,[self class] ,NSStringFromSelector(aSelector), self]];
+        [[LongCrashManager sharedInstancel] onCrashWithClassName:[NSString stringWithFormat:@"%@", [self class]]
+                                                    selectorName:NSStringFromSelector(aSelector)
+                                                   exceptionName:@"unrecognized selector sent to class"
+                                                         address:[NSString stringWithFormat:@"%p", self]
+                                                      isInstance:NO
+                                                callStackSymbols:[NSString stringWithFormat:@"%@", [NSThread callStackSymbols]]];
     }
     return sig;
 }

@@ -39,6 +39,15 @@ LongCrash使用方法
 }
 ```
 
+数据回调格式，方便开发者分析错误，并及时修复
+
+```
+回调数据：
+LongCrash|[AppDelegate showmethemoney]|unrecognized selector sent to class|0x60000002f660|instance|callStackSymbols
+格式对照：
+框架名|[实例名称or类名称 调用方法]|错误类型|地址|实例or类调用|调用栈信息
+```
+
 ## 错误示例
 
 下面是几种目前支持捕捉crash的错误，此项目也会针对常见crash做出实时更新
@@ -68,6 +77,11 @@ pod install
 ```
 
 ## Relase Note
+
+### v1.0.1
+* 回调信息增加调用栈信息(默认不打印，需要设置)，规范回调数据格式
+* 避免NSArray因initWithObjects:count:包含nil引起crash
+* 避免NSMutableDictionary因removeObjectForKey:设置nil引起crash
 
 ### v1.0.0
 * 避免app因unrecognized selector引起crash

@@ -11,4 +11,11 @@
 
 - (void)onCrashWithInfo:(NSString*)aInfo;
 
+- (void)onCrashWithClassName:(NSString*)aClassName
+                selectorName:(NSString*)aSelectorName
+               exceptionName:(NSString*)aExceptionName
+                     address:(NSString*)aAddress
+                  isInstance:(BOOL)aIsInstance
+            callStackSymbols:(NSString*)aCallStackSymbols;
+
 @end
